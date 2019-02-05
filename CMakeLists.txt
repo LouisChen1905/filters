@@ -37,37 +37,25 @@ set(LIBS
   ${pluginlib_LIBRARIES}
 )
 
-add_library(mean SHARED src/mean.cpp)
-target_link_libraries(mean ${LIBS})
+add_library( ${PROJECT_NAME} SHARED
+src/mean.cpp
+src/median.cpp
+src/test_params.cpp
+src/increment.cpp
+src/transfer_function.cpp
+)
+target_link_libraries( ${PROJECT_NAME} ${LIBS})
 
-add_library(median SHARED src/median.cpp)
-target_link_libraries(median ${LIBS})
-
-add_library(param_test SHARED src/test_params.cpp)
-target_link_libraries(param_test ${LIBS})
-
-add_library(increment SHARED src/increment.cpp)
-target_link_libraries(increment ${LIBS})
-
-add_library(transfer_function SHARED src/transfer_function.cpp)
-target_link_libraries(transfer_function ${LIBS})
-
-install(TARGETS
-        mean
-        median
-        transfer_function
-        param_test
-        increment
+install(TARGETS ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
-
-install(DIRECTORY "include/"
-  DESTINATION include)
-
+install(
+  DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION include/${PROJECT_NAME})
 
 install(FILES default_plugins.xml
   DESTINATION share/${PROJECT_NAME}
@@ -77,11 +65,10 @@ ament_export_dependencies(ament_cmake)
 ament_export_dependencies(builtin_interfaces)
 ament_export_dependencies(rclcpp)
 ament_export_dependencies(rclpy)
-ament_export_dependencies(${PROJECT_NAME})
 ament_export_dependencies(pluginlib)
 ament_export_include_directories(${INCLUDE_DIRS})
+ament_export_libraries(${PROJECT_NAME})
 pluginlib_export_plugin_description_file(${PROJECT_NAME} default_plugins.xml)
-
 
 if(BUILD_TESTING)
 
@@ -110,8 +97,6 @@ if(BUILD_TESTING)
                 test_params
                 test_mean
         DESTINATION lib/${PROJECT_NAME})
-
-
 endif()
 
 install(DIRECTORY

@@ -36,7 +36,24 @@ Design changes:
 					type: filters/MultiChannelMedianFilterDouble
 					params: {number_of_observations: 5}      
 
-	3. Xmlrpc variables replaced by string types variables and required modification/changes incorporated. 
+	 3. Support for the yaml file related to different dictionary style is provided through logical changes in the design and is more generic now.For example:
+	array_filter_chain:
+		ros__parameters:
+			filter1:
+				type: laser_filters/LaserArrayFilter
+				name: laser_median_filter
+				params: 
+					range_filter_chain:
+						name: median_2
+						type: filters/MultiChannelMeanFilterFloat 
+						params:{number_of_observations: 3}
+					intensity_filter_chain:
+						name: median_2
+						type: filters/MultiChannelMeanFilterFloat
+						params:{number_of_observations: 3}		
+                    
+	4. Xmlrpc variables replaced by string types variables and required modification/changes incorporated. 
+	5. The " confugure()" function for inherited classes i.e. implementation of different type of filters is maintain as per ros1 design.(Earlier it was get_parameter(param_name, node) with two arguments). 
 
 Build proccedure and testing
 
