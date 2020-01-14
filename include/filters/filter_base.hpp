@@ -111,7 +111,8 @@ public:
 protected:
   bool configured_;
   rcl_interfaces::msg::ListParametersResult parameters_and_prefixes;
-  std::map<std::string, std::string> filter_param;
+  using FilterParamMap = std::map<std::string, std::string>;
+  FilterParamMap filter_param;
   std::stringstream ss1;
   std::string param_name_;
   rclcpp::Node::SharedPtr node_;

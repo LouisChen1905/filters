@@ -45,6 +45,13 @@ src/increment.cpp
 src/transfer_function.cpp
 )
 target_link_libraries( ${PROJECT_NAME} ${LIBS})
+ament_target_dependencies(${PROJECT_NAME}
+  rclcpp
+  std_msgs
+  sensor_msgs
+  geometry_msgs
+  Boost
+  pluginlib)
 
 install(TARGETS ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
@@ -58,7 +65,7 @@ install(
   DESTINATION include/${PROJECT_NAME})
 
 install(FILES default_plugins.xml
-  DESTINATION share/${PROJECT_NAME}
+  DESTINATION share
 )
 
 ament_export_dependencies(ament_cmake)
@@ -66,7 +73,7 @@ ament_export_dependencies(builtin_interfaces)
 ament_export_dependencies(rclcpp)
 ament_export_dependencies(rclpy)
 ament_export_dependencies(pluginlib)
-ament_export_include_directories(${INCLUDE_DIRS})
+ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 pluginlib_export_plugin_description_file(${PROJECT_NAME} default_plugins.xml)
 
